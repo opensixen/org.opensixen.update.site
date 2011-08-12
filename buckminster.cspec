@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cs:cspec xmlns:cs="http://www.eclipse.org/buckminster/CSpec-1.0" name="org.opensixen.update.site" componentType="buckminster" version="1.0.0">
+    <cs:dependencies>
+        <cs:dependency name="feature.opensixen.opensixen_lite" componentType="eclipse.feature"/>
+        <cs:dependency name="feature.opensixen.server" componentType="eclipse.feature"/>
+        <cs:dependency name="feature.opensixen.client" componentType="eclipse.feature"/>
+    </cs:dependencies>
+    <cs:actions>
+        <cs:public name="build.site" actor="ant">
+            <cs:actorProperties>
+                <cs:property key="buildFileId" value="buckminster.pdetasks"/>
+                <cs:property key="targets" value="create.legacy.site"/>
+            </cs:actorProperties>
+            <cs:properties>
+                <cs:property key="site.extra.suffix" value="_incubation"/>
+            </cs:properties>
+            <cs:prerequisites>
+                <cs:attribute name="site.template" alias="template"/>
+                <cs:attribute name="site.rootFiles" alias="rootFiles"/>
+                <cs:attribute name="feature.jars" alias="features"/>
+                <cs:attribute name="bundle.jars" alias="plugins"/>
+            </cs:prerequisites>
+            <cs:products alias="action.output" base="site/"/>
+        </cs:public>
+        <cs:private name="site.rootFiles">
+            <cs:products>
+                <cs:path path="index.html"/>
+            </cs:products>
+        </cs:private>
+        <cs:private name="site.template"/>
+    </cs:actions>
+    <cs:groups>
+        <cs:private name="bundle.jars">
+            <cs:attribute name="bundle.jars" component="feature.opensixen.client"/>
+            <cs:attribute name="bundle.jars" component="feature.opensixen.opensixen_lite"/>
+            <cs:attribute name="bundle.jars" component="feature.opensixen.server"/>
+        </cs:private>
+        <cs:private name="feature.jars">
+            <cs:attribute name="feature.jars" component="feature.opensixen.client"/>
+            <cs:attribute name="feature.jars" component="feature.opensixen.opensixen_lite"/>
+            <cs:attribute name="feature.jars" component="feature.opensixen.server"/>
+        </cs:private>
+    </cs:groups>
+</cs:cspec>
